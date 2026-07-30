@@ -83,3 +83,9 @@ pnpm dev
 
 Bu komut Turborepo aracılığıyla hem web'i (`http://localhost:3000`) hem de
 API'yi (`http://localhost:4000`) aynı anda başlatır.
+
+## Lisans
+
+Bu repo görüntüleme/portföy amacıyla herkese açıktır, ancak kaynak kod
+üzerinde tüm haklar saklıdır. Ayrıntılar için [LICENSE](./LICENSE)
+dosyasına bakın.

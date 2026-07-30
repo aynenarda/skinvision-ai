@@ -3,3 +3,11 @@ node_modules
 .env
 
 /src/generated/prisma
+
+# Prisma'nın otomatik oluşturduğu AI agent yardımcı dokümanları -- yerel
+# geliştirme deneyimini iyileştiriyor ama repo'ya gereksiz kalabalık katıyor,
+# projenin gerçek kaynak kodunun bir parçası değil.
+.claude/
+.agents/
+.windsurf/
+skills-lock.json

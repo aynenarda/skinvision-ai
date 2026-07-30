@@ -1,9 +1,15 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-// Şimdilik hiçbir route'u zorla korumuyoruz -- landing page tamamen açık.
-// Dashboard modülünü kurduğumuzda buraya `createRouteMatcher` ile
-// "/dashboard(.*)" gibi korumalı route tanımları ekleyeceğiz.
-export default clerkMiddleware();
+const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
+
+export default clerkMiddleware(async (auth, req) => {
+  if (isProtectedRoute(req)) {
+    // Giriş yapmamış kullanıcıyı otomatik /login'e yönlendirir
+    // (redirect URL'e ?redirect_url=/dashboard/... ekleyerek, giriş sonrası
+    // kullanıcıyı gitmek istediği sayfaya geri döndürür).
+    await auth.protect();
+  }
+});
 
 export const config = {
   matcher: [

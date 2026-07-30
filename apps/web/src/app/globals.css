@@ -123,6 +123,14 @@
   animation: glow-drift-b 11s ease-in-out infinite;
 }
 
+/* Clerk'in "Secured by" marka rozeti, appearance.elements üzerinden hedeflenemiyor
+   (Clerk bunu bilinçli olarak zorlaştırıyor) -- koyu arkaplanda neredeyse görünmez
+   kalan bu metni stabil "cl-footerItem" class'ı üzerinden elle düzeltiyoruz. */
+.cl-footerItem,
+.cl-footerItem * {
+  color: var(--muted-foreground) !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

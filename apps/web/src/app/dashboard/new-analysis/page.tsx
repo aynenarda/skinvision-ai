@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import { Camera, ImageUp, Loader2, RotateCcw } from "lucide-react";
@@ -19,22 +19,34 @@ export default function NewAnalysisPage() {
   const [error, setError] = useState<string | null>(null);
 
   const videoRef = useRef<HTMLVideoElement>(null);
-  const streamRef = useRef<MediaStream | null>(null);
+  const [stream, setStream] = useState<MediaStream | null>(null);
+
+  // `<video>` elementi ancak `stage === "camera"` olduğunda DOM'a giriyor,
+  // yani `getUserMedia` sonucu geldiğinde ref henüz null olabilir. Akışı
+  // stream/videoRef ikisi de hazır olunca bu effect'te bağlıyoruz --
+  // ayrıca bazı tarayıcılar `autoPlay`'e rağmen `play()` çağrısı istiyor.
+  useEffect(() => {
+    if (stage !== "camera" || !stream || !videoRef.current) return;
+    const video = videoRef.current;
+    video.srcObject = stream;
+    video.play().catch(() => {});
+  }, [stage, stream]);
 
   async function startCamera() {
     setError(null);
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user" },
-      });
-      streamRef.current = stream;
+      let media: MediaStream;
+      try {
+        media = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" },
+        });
+      } catch {
+        // Bazı masaüstü kameraları "facingMode" kısıtını desteklemiyor
+        // (OverconstrainedError) -- kısıtsız tekrar dene.
+        media = await navigator.mediaDevices.getUserMedia({ video: true });
+      }
+      setStream(media);
       setStage("camera");
-      // videoRef henüz DOM'a girmediyse bir sonraki tick'te bağlanır
-      requestAnimationFrame(() => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
-      });
     } catch {
       setError(
         "Kameraya erişilemedi. Tarayıcı izinlerini kontrol edin veya bir fotoğraf yükleyin."
@@ -43,8 +55,8 @@ export default function NewAnalysisPage() {
   }
 
   function stopCamera() {
-    streamRef.current?.getTracks().forEach((track) => track.stop());
-    streamRef.current = null;
+    stream?.getTracks().forEach((track) => track.stop());
+    setStream(null);
   }
 
   function capturePhoto() {
@@ -120,7 +132,12 @@ export default function NewAnalysisPage() {
                 <Camera className="size-4" />
                 Kamerayı Aç
               </Button>
-              <Button variant="outline" render={<label />} className="gap-2">
+              <Button
+                variant="outline"
+                nativeButton={false}
+                render={<label />}
+                className="gap-2"
+              >
                 <ImageUp className="size-4" />
                 Fotoğraf Yükle
                 <input

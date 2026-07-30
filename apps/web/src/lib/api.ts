@@ -7,10 +7,21 @@ export interface Analysis {
   overallScore: number | null;
   status: "PENDING" | "COMPLETED" | "FAILED";
   results: {
-    acne: number;
-    redness: number;
-    dryness: number;
-    note: string;
+    metrics: {
+      acne: number;
+      redness: number;
+      dryness: number;
+      oiliness: number;
+      evenness: number;
+      texture: number;
+    };
+    observations: string[];
+    recommendations: {
+      title: string;
+      rationale: string;
+      category: string;
+    }[];
+    disclaimer: string;
   } | null;
   createdAt: string;
 }

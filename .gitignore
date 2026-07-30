@@ -1,0 +1,22 @@
+# Bağımlılıklar (npm/pnpm ile indirilen paketler — GitHub'a yüklenmez, herkes kendi bilgisayarında indirir)
+node_modules/
+
+# Ortam değişkenleri (API key, veritabanı şifresi gibi gizli bilgiler burada durur — asla paylaşılmaz)
+.env
+.env.local
+.env*.local
+
+# Build/derleme çıktıları (kaynak koddan otomatik üretilir, tekrar üretilebilir)
+.next/
+dist/
+build/
+
+# Turborepo cache
+.turbo/
+
+# Editör/OS dosyaları
+.vscode/
+.DS_Store
+
+# Log dosyaları
+*.log

@@ -1,0 +1,17 @@
+packages:
+  # apps/ klasörü altındaki her klasör (web, api) ayrı bir paket sayılır
+  - "apps/*"
+  # packages/ klasörü altındaki her klasör (shared-types, config) ayrı bir paket sayılır
+  - "packages/*"
+
+allowBuilds:
+  sharp: true
+  unrs-resolver: true
+
+# Bugün yayınlanmış (henüz "olgunlaşma süresi" dolmamış) sürümler yerine,
+# tedarik-zinciri güvenlik politikasını geçen bir önceki stabil sürümleri kullan.
+overrides:
+  "@napi-rs/wasm-runtime": "1.2.0"
+  "baseline-browser-mapping": "2.11.6"
+  "brace-expansion@1": "1.1.16"
+  "postcss": "8.5.24"

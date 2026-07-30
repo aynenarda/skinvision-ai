@@ -1,26 +1,136 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
+/*
+  SkinVision AI marka paleti: koyu/klinik-teknolojik yön.
+  Landing page için "dark" varsayılan; dashboard'da ileride next-themes ile
+  kullanıcı tercihi eklenecek (aynı .dark class mekanizması kullanılacak).
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0f;
+  --foreground: #f5f5f7;
+  --card: #131320;
+  --card-foreground: #f5f5f7;
+  --popover: #131320;
+  --popover-foreground: #f5f5f7;
+  --primary: #7c5cfc;
+  --primary-foreground: #ffffff;
+  --secondary: #1c1c2a;
+  --secondary-foreground: #f5f5f7;
+  --muted: #17171f;
+  --muted-foreground: #8b8b99;
+  --accent: rgba(124, 92, 252, 0.12);
+  --accent-foreground: #f5f5f7;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #7c5cfc;
+  --radius: 0.75rem;
+
+  /* Marka gradyan uçları — Button/Badge gibi shadcn component'lerinde değil,
+     kendi Hero/CTA component'lerimizde bg-gradient-to-r ile kullanacağız. */
+  --accent-violet: #7c5cfc;
+  --accent-cyan: #22d3ee;
+}
+
+/* Şimdilik .dark ile :root aynı değerleri taşıyor — ileride dashboard'da
+   next-themes bu class'ı kaldırıp ayrı bir "light" palet uygulayacak. */
+.dark {
+  --background: #0a0a0f;
+  --foreground: #f5f5f7;
+  --card: #131320;
+  --card-foreground: #f5f5f7;
+  --popover: #131320;
+  --popover-foreground: #f5f5f7;
+  --primary: #7c5cfc;
+  --primary-foreground: #ffffff;
+  --secondary: #1c1c2a;
+  --secondary-foreground: #f5f5f7;
+  --muted: #17171f;
+  --muted-foreground: #8b8b99;
+  --accent: rgba(124, 92, 252, 0.12);
+  --accent-foreground: #f5f5f7;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #7c5cfc;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-cyan: var(--accent-cyan);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes glow-drift-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate(4%, 6%) scale(1.1);
+    opacity: 0.5;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes glow-drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(-6%, -4%) scale(1.15);
+    opacity: 0.4;
+  }
+}
+
+.animate-glow-a {
+  animation: glow-drift-a 9s ease-in-out infinite;
+}
+
+.animate-glow-b {
+  animation: glow-drift-b 11s ease-in-out infinite;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
 }

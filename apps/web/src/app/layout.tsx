@@ -34,7 +34,24 @@ export default function RootLayout({
           colorBackground: "#131320",
           colorText: "#f5f5f7",
           colorTextSecondary: "#8b8b99",
+          colorTextOnPrimaryBackground: "#ffffff",
+          colorInputBackground: "#1c1c2a",
+          colorInputText: "#f5f5f7",
+          colorNeutral: "#f5f5f7",
+          colorDanger: "#ef4444",
           borderRadius: "0.75rem",
+        },
+        // `@clerk/themes`'in `dark` preset'i, bu Clerk sürümüyle (v7) CSS
+        // değişkenlerini doğru enjekte etmiyor -- ölçüm yaparak tespit
+        // ettiğimiz, kontrastı bozuk elementleri burada elle düzeltiyoruz.
+        elements: {
+          headerTitle: { color: "#f5f5f7" },
+          headerSubtitle: { color: "#8b8b99" },
+          formFieldLabel: { color: "#f5f5f7" },
+          dividerText: { color: "#8b8b99" },
+          footerActionText: { color: "#8b8b99" },
+          footer: { color: "#8b8b99" },
+          socialButtonsBlockButtonText: { color: "#f5f5f7" },
         },
       }}
     >

@@ -20,3 +20,6 @@ build/
 
 # Log dosyaları
 *.log
+
+# Claude Code yerel proje ayarları (kişiye/makineye özel)
+.claude/

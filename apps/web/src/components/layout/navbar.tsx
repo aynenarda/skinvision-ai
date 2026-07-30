@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, Sparkles, X } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -13,7 +12,12 @@ const NAV_LINKS = [
   { label: "SSS", href: "#faq" },
 ];
 
-export function Navbar() {
+interface NavbarProps {
+  // Server Component olarak render edilip buraya geçirilir (bkz. AuthNavLinks)
+  authSlot: React.ReactNode;
+}
+
+export function Navbar({ authSlot }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -56,24 +60,7 @@ export function Navbar() {
           ))}
         </div>
 
-        <div className="hidden items-center gap-2 md:flex">
-          <Button
-            variant="ghost"
-            size="sm"
-            nativeButton={false}
-            render={<Link href="/login" />}
-          >
-            Giriş Yap
-          </Button>
-          <Button
-            size="sm"
-            nativeButton={false}
-            render={<Link href="/register" />}
-            className="bg-gradient-to-r from-accent-violet to-accent-cyan text-white hover:opacity-90"
-          >
-            Ücretsiz Başla
-          </Button>
-        </div>
+        <div className="hidden items-center gap-2 md:flex">{authSlot}</div>
 
         <button
           type="button"
@@ -98,22 +85,7 @@ export function Navbar() {
                 {link.label}
               </a>
             ))}
-            <div className="mt-2 flex flex-col gap-2">
-              <Button
-                variant="outline"
-                nativeButton={false}
-                render={<Link href="/login" />}
-              >
-                Giriş Yap
-              </Button>
-              <Button
-                nativeButton={false}
-                render={<Link href="/register" />}
-                className="bg-gradient-to-r from-accent-violet to-accent-cyan text-white"
-              >
-                Ücretsiz Başla
-              </Button>
-            </div>
+            <div className="mt-2 flex flex-col items-start gap-2">{authSlot}</div>
           </div>
         </div>
       )}

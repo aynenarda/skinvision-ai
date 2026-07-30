@@ -1,11 +1,13 @@
 export interface User {
   id: string;
+  clerkId: string;
   name: string;
   email: string;
   createdAt: Date;
 }
 
 export interface CreateUserInput {
+  clerkId: string;
   name: string;
   email: string;
 }
@@ -19,6 +21,7 @@ export interface UserRepository {
   findAll(): Promise<User[]>;
   findById(id: string): Promise<User | null>;
   findByEmail(email: string): Promise<User | null>;
+  findByClerkId(clerkId: string): Promise<User | null>;
   create(input: CreateUserInput): Promise<User>;
 }
 
@@ -37,9 +40,14 @@ export class InMemoryUserRepository implements UserRepository {
     return this.users.find((user) => user.email === email) ?? null;
   }
 
+  async findByClerkId(clerkId: string): Promise<User | null> {
+    return this.users.find((user) => user.clerkId === clerkId) ?? null;
+  }
+
   async create(input: CreateUserInput): Promise<User> {
     const user: User = {
       id: crypto.randomUUID(),
+      clerkId: input.clerkId,
       name: input.name,
       email: input.email,
       createdAt: new Date(),

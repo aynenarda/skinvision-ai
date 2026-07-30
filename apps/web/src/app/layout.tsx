@@ -52,6 +52,13 @@ export default function RootLayout({
           footerActionText: { color: "#8b8b99" },
           footer: { color: "#8b8b99" },
           socialButtonsBlockButtonText: { color: "#f5f5f7" },
+          navbarButton: { color: "#8b8b99" },
+          navbarButtonIcon: { color: "#8b8b99" },
+          navbarMobileMenuRow: { color: "#8b8b99" },
+          profileSectionTitleText: { color: "#8b8b99" },
+          profileSectionContent: { color: "#f5f5f7" },
+          identityPreviewText: { color: "#f5f5f7" },
+          accordionTriggerButton: { color: "#f5f5f7" },
         },
       }}
     >

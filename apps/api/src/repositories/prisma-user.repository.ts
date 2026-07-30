@@ -23,6 +23,10 @@ export class PrismaUserRepository implements UserRepository {
     return prisma.user.findUnique({ where: { email } });
   }
 
+  async findByClerkId(clerkId: string): Promise<User | null> {
+    return prisma.user.findUnique({ where: { clerkId } });
+  }
+
   async create(input: CreateUserInput): Promise<User> {
     return prisma.user.create({ data: input });
   }

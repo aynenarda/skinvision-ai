@@ -4,6 +4,7 @@ import { z } from "zod";
 import type { UserService } from "../services/user.service.js";
 
 const createUserSchema = z.object({
+  clerkId: z.string().min(1, "clerkId is required"),
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
 });

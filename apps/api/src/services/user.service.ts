@@ -31,4 +31,19 @@ export class UserService {
     }
     return this.userRepository.create(input);
   }
+
+  /**
+   * Clerk üzerinden kimliği doğrulanmış bir kullanıcı ilk kez API'ye istek
+   * attığında, karşılık gelen `User` satırı Postgres'te henüz yoksa burada
+   * oluşturulur ("lazy sync" -- webhook yerine istek anında senkronizasyon).
+   */
+  async syncFromClerk(input: CreateUserInput): Promise<User> {
+    const existingUser = await this.userRepository.findByClerkId(
+      input.clerkId
+    );
+    if (existingUser) {
+      return existingUser;
+    }
+    return this.userRepository.create(input);
+  }
 }

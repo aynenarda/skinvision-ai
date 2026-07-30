@@ -26,6 +26,14 @@ export function AuthNavLinks() {
         </Button>
       </Show>
       <Show when="signed-in">
+        <Button
+          size="sm"
+          nativeButton={false}
+          render={<Link href="/dashboard" />}
+          className="bg-gradient-to-r from-accent-violet to-accent-cyan text-white hover:opacity-90"
+        >
+          Dashboard
+        </Button>
         <UserButton />
       </Show>
     </>
